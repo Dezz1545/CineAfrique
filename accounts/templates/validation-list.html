@@ -1,0 +1,187 @@
+{% extends 'base3.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .catalog__text--yellow {
+        color: #f1c40f; /* Couleur jaune pour le statut En attente */
+    }
+    .catalog__text--green {
+        color: #2ecc71; /* Couleur verte pour le statut Actif */
+    }
+    .catalog__text--red {
+        color: #e74c3c; /* Couleur rouge pour le statut Refusé */
+    }
+    .catalog__text--blue {
+    color: #3498db; /* Couleur bleue pour le statut En révision */
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .pagination a,
+    .pagination span {
+        margin: 0 5px;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        text-decoration: none;
+        color: #333;
+    }
+    .pagination .current {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+    .pagination .disabled {
+        color: #ccc;
+        border-color: #ccc;
+        pointer-events: none;
+    }
+</style>
+
+<!-- main content -->
+<main class="main">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- main title -->
+            <div class="col-12">
+                <div class="main__title">
+                    <h2>Films</h2>
+
+                    <span class="main__title-stat">{{ page_obj.paginator.count }} Total</span>
+
+                    <div class="main__title-wrap">
+                        <select class="filter__select" name="sort" id="filter__sort">
+                            <option value="0">Toutes les options</option>
+                            <option value="1">Statut</option>
+                            <option value="2">Auteurs</option>
+                        </select>
+
+                        <!-- search -->
+                        <form action="#" class="main__title-form">
+                            <input type="text" placeholder="Find movie / tv series..">
+                            <button type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"></path></svg>
+                            </button>
+                        </form>
+                        <!-- end search -->
+                    </div>
+                </div>
+            </div>
+            <!-- end main title -->
+
+            <!-- stats -->
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="stats">
+                    <span>Nombre de vues</span>
+                    <p>{{ total_views }}</p>
+                 <img src="{% static 'img/graph-bar.svg' %}" alt="">
+                </div>
+            </div>
+            <!-- end stats -->
+
+            <!-- stats -->
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="stats">
+                    <span>Nombre Total de films</span>
+                    <p>{{ total_videos }}</p>
+                    <img src="{% static 'img/film.svg' %}" alt="">
+                </div>
+            </div>
+            <!-- end stats -->
+
+            <!-- items -->
+            <div class="col-12">
+                <div class="catalog catalog--1">
+                    <table class="catalog__table">
+                        <thead>
+                            <tr>
+                                <th>TITRE</th>
+                                <th>AUTEURS</th>
+                                <th>VUES</th>
+                                <th>STATUT</th>
+                                <th>DATE D'AJOUT</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for video in page_obj %}
+                                <tr>
+                                    <td>
+                                        <div class="catalog__text"><a href="#">{{ video.titre }}</a></div>
+                                    </td>
+                                    <td>
+                                        <div class="catalog__text">{{ video.réalisateur }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="catalog__text">{{ video.vues }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="catalog__text 
+                                            {% if video.statut == 'en_attente' %}catalog__text--yellow
+                                            {% elif video.statut == 'en_ligne' %}catalog__text--green
+                                            {% elif video.statut == 'refuse' %}catalog__text--red
+                                            {% elif video.statut == 'en_revision' %}catalog__text--blue
+                                            {% endif %}">
+                                            {{ video.get_statut_display }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="catalog__text">{{ video.date_add|date:"d.m.Y" }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="catalog__btns">
+                                            <a href="{% url 'single-video' video.id %}" class="catalog__btn catalog__btn--view">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"/></svg>
+                                            </a>
+                                            <button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10..."/>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="7">Aucun film trouvé.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; Première</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">Précédente</a>
+                        {% else %}
+                            <span class="disabled">&laquo; Première</span>
+                            <span class="disabled">Précédente</span>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <span class="current">{{ num }}</span>
+                            {% else %}
+                                <a href="?page={{ num }}">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">Suivante</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">Dernière &raquo;</a>
+                        {% else %}
+                            <span class="disabled">Suivante</span>
+                            <span class="disabled">Dernière &raquo;</span>
+                        {% endif %}
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+{% endblock %}
+

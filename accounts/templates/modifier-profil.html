@@ -1,0 +1,147 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row">
+				<!-- main title -->
+				<div class="col-12">
+					<div class="main__title">
+						<h2>Edit user</h2>
+					</div>
+				</div>
+				<!-- end main title -->
+
+				<!-- profile -->
+				<div class="col-12">
+					<div class="profile__content">
+						<!-- profile user -->
+						<div class="profile__user">
+							<div class="profile__avatar">
+								<img src="{% static 'img/user.svg' %}" alt="">
+							</div>
+							<!-- or red -->
+							<div class="profile__meta profile__meta--green">
+								<h3>Username</h3>
+								
+							</div>
+						</div>
+						<!-- end profile user -->
+
+						<!-- profile tabs nav -->
+						<ul class="nav nav-tabs profile__tabs" id="profile__tabs" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button id="1-tab" class="active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button" role="tab" aria-controls="tab-1" aria-selected="true">Profile</button>
+							</li>
+
+						</ul>
+						<!-- end profile tabs nav -->
+
+						<!-- profile btns -->
+						<div class="profile__actions">
+							<button type="button" data-bs-toggle="modal" class="profile__action profile__action--banned" data-bs-target="#modal-status3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,13a1,1,0,0,0-1,1v3a1,1,0,0,0,2,0V14A1,1,0,0,0,12,13Zm5-4V7A5,5,0,0,0,7,7V9a3,3,0,0,0-3,3v7a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V12A3,3,0,0,0,17,9ZM9,7a3,3,0,0,1,6,0V9H9Zm9,12a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H17a1,1,0,0,1,1,1Z"/></svg></button>
+							<button type="button" data-bs-toggle="modal" class="profile__action profile__action--delete" data-bs-target="#modal-delete3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Z"/></svg></button>
+						</div>
+						<!-- end profile btns -->
+					</div>
+				</div>
+				<!-- end profile -->
+
+				<!-- content tabs -->
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab" tabindex="0">
+						<div class="col-12">
+							<div class="row">
+								<!-- details form -->
+								<div class="col-12 col-lg-6">
+									<form action="#" class="sign__form sign__form--profile">
+										<div class="row">
+											<div class="col-12">
+												<h4 class="sign__title">Profile details</h4>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="username">Username</label>
+													<input id="username" type="text" name="username" class="sign__input" placeholder="User 123">
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="email2">Email</label>
+													<input id="email2" type="text" name="email" class="sign__input" placeholder="email@email.com">
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="firstname">First Name</label>
+													<input id="firstname" type="text" name="firstname" class="sign__input" placeholder="John">
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="lastname">Last Name</label>
+													<input id="lastname" type="text" name="lastname" class="sign__input" placeholder="Doe">
+												</div>
+											</div>
+
+											<div class="col-12">
+												<button class="sign__btn sign__btn--small" type="button"><span>Save</span></button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<!-- end details form -->
+
+								<!-- password form -->
+								<div class="col-12 col-lg-6">
+									<form action="#" class="sign__form sign__form--profile">
+										<div class="row">
+											<div class="col-12">
+												<h4 class="sign__title">Change password</h4>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="oldpass">Old Password</label>
+													<input id="oldpass" type="password" name="oldpass" class="sign__input">
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12 col-xl-6">
+												<div class="sign__group">
+													<label class="sign__label" for="newpass">New Password</label>
+													<input id="newpass" type="password" name="newpass" class="sign__input">
+												</div>
+											</div>
+
+											<div class="col-12 col-md-6 col-lg-12">
+												<div class="sign__group">
+													<label class="sign__label" for="confirmpass">Confirm New Password</label>
+													<input id="confirmpass" type="password" name="confirmpass" class="sign__input">
+												</div>
+											</div>
+
+											<div class="col-12">
+												<button class="sign__btn sign__btn--small" type="button"><span>Change</span></button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<!-- end password form -->
+							</div>
+						</div>	
+					</div>
+				</div>
+				<!-- end content tabs -->
+			</div>
+		</div>
+	</main>
+	<!-- end main content -->
+	
+{% endblock %}

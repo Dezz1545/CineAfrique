@@ -1,0 +1,80 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .sign__form {
+        background: #1e1e1e;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        color: #fff;
+    }
+    
+    .sign__input, .sign__file-upload {
+        width: 100%;
+    }
+
+    .sign__input {
+        padding: 12px;
+        border: 1px solid #333;
+        border-radius: 4px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #333;
+    }
+    
+    .sign__file-upload {
+        border: 2px dashed #555;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        background-color: #222;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .sign__file-upload:hover {
+        background-color: #333;
+    }
+
+    .sign__btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .sign__btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<main class="main">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="main__title">
+                    <h2>Ajouter un film</h2>
+                </div>
+            </div>
+            <div class="col-12">
+                <form method="post" enctype="multipart/form-data" class="sign__form sign__form--add">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="col-12">
+                        <div class="sign__group">
+                            <button type="submit" class="sign__btn">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

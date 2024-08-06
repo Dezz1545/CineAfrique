@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'assets/css/ajustement.css' %}">
+
+<!-- Content Start -->
+    <div class="main-content">
+      <div class="main-content-inner">
+        <br><br><br>
+        <div class="page-title">
+          <h1>Explorer</h1>
+          {% if user.is_authenticated %}
+          {% if user.is_staff %}
+            {% else %}
+          <a href="{% url 'ajouter-film' %}" class="btn-custom tertiary"> <i class="fas fa-upload"></i> Ajouter un film </a>
+          {% endif %}
+          {% endif %}
+
+        </div>
+
+        <!-- Banner Start -->
+<div class="banner banner-1 swiper-container">
+  <div class="banner-inner swiper-wrapper">
+      {% for video in videos|slice:":3" %}
+      <!-- Banner Item Start -->
+      <div class="banner-item swiper-slide">
+          <div class="banner-thumbnail" style="background-image:url({{ video.image_couverture.url }})">
+              <a href="{% url 'single-video' video.id %}" class="play-btn">
+                  <i class="fas fa-play"></i>
+              </a>
+          </div>
+          <div class="banner-item-inner">
+              <div class="media">
+                  <div class="media-body">
+                      <br><br><br><br>
+                      <h6> <a href="{% url 'single-video' video.id %}">{{ video.titre }}</a> </h6>
+                      <span>Réalisateur: {{ video.realisateur}}</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Banner Item End -->
+      {% endfor %}
+  </div>
+</div>
+<!-- Banner End -->
+
+
+        <!-- Featured Videos Start -->
+<div class="section">
+
+  <div class="section-title-wrap">
+    <div class="section-title">
+      <h3>Featured Videos</h3>
+    </div>
+    <div class="section-controls">
+      <a href="#">See All</a>
+      <div class="arrows">
+        <div class="swiper-button-prev multi-row-arrow-prev"></div>
+        <div class="swiper-button-next multi-row-arrow-next"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="swiper-container multi-row-videos">
+    <div class="video-slider swiper-wrapper">
+
+      {% for video in videos %}
+      <!-- Video Start -->
+      <div class="swiper-slide">
+        <div class="video">
+          <div class="video-thumbnail">
+            <div class="video-thumbnail-inner">
+              <a href="{% url 'single-video' video.id %}"><img src="{{ video.image_couverture.url }}" alt="video"></a>
+              <a href="{% url 'single-video' video.id %}" class="play-btn">
+                <i class="fas fa-play"></i>
+              </a>
+            </div>
+          </div>
+          <div class="video-content">
+            <div class="media">
+              <div class="media-body">
+                <h6> <a href="{% url 'single-video' video.id %}">{{ video.titre }}</a> </h6>
+                <a class="video-author" href="{% url 'single-video' video.id %}"><i class="fas fa-check-double"></i> {{ video.realisateur }}</a>
+                <div class="video-meta">
+                  <span class="far fa-eye">{{ video.vues }} Vues</span>
+                  <span>{{ video.date_add|date:"F j, Y" }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Video End -->
+      {% endfor %}
+
+    </div>
+  </div>
+
+</div>
+<!-- Featured Videos End -->
+
+
+{% endblock content %}

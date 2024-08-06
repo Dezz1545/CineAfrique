@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'assets/css/ajustement.css' %}">
+
+<!-- Content Start -->
+<div class="main-content">
+
+  <!-- Inner Banner Start -->
+  <div class="page-subheader">
+    <div class="page-subheader-inner bg-center bg-parallax dark-overlay" style="background-image: url('{% static 'assets/img/cover.jpg' %}')">
+      <h1>Films</h1>
+    </div>
+    <div class="page-subheader-controls filter">
+      <div class="page-subheader-controls-inner">
+        <div class="toggle-view">
+          <span class="toggle-grid" data-toggle="tooltip" title="Toggle Grid"> <i class="fas fa-th-large"></i> </span>
+          <span class="toggle-list" data-toggle="tooltip" title="Toggle List"> <i class="fas fa-th-list"></i> </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Inner Banner End -->
+
+  <div class="main-content-inner">
+
+    <!-- Videos Start -->
+    <div class="row">
+
+      {% for video in videos %}
+      <!-- Video Start -->
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+        <div class="video">
+          <div class="video-thumbnail">
+            <div class="video-thumbnail-inner">
+              <a href="{% url 'single-video' video.id %}"><img src="{{ video.image_couverture.url }}" alt="video"></a>
+              <a href="{% url 'single-video' video.id %}" class="play-btn">
+                <i class="fas fa-play"></i>
+              </a>
+            </div>
+          </div>
+          <div class="video-content">
+            <div class="media">
+              <div class="media-body">
+                <h6> <a href="{% url 'single-video' video.id %}">{{ video.titre }}</a> </h6>
+                <a class="video-author" href="#"><i class="fas fa-check-double"></i> {{ video.realisateur }}</a>
+                <div class="video-meta">
+                  <span class="far fa-eye">{{ video.vues }} Vues</span>
+                  <span>{{ video.date_add|date:"F j, Y" }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Video End -->
+      {% endfor %}
+
+    </div>
+    <!-- Videos End -->
+
+  </div>
+</div>
+<!-- Content End -->
+
+{% endblock %}
