@@ -41,6 +41,3 @@ python manage.py createsuperuser
 Lancer le serveur de développement
 Démarrez le serveur de développement Django :
 python manage.py runserver
-
-
-Installez les dépendances nécessaires à partir du fichier requirements.txt :
